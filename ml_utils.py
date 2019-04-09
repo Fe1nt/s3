@@ -10,12 +10,13 @@ def filteringnDate(record):  #filting the useful things out
         columns = record.split(",")
         videoID = columns[0].strip()
         trendDate = columns[1].strip()
-        category = columns[3].strip()
+        realDate = trendDate[0:2]+trendDate[6:]+trendDate[3:5]
+        category =str(columns[3].strip())
         like = columns[6].strip()
         dislike = columns[7].strip()
         country = columns[11].strip()
 
-        return (trendDate,[videoID,category,like,dislike,country])
+        return (realDate,[videoID,category,like,dislike,country])
     except:
         return ('',[''])
 
@@ -24,7 +25,7 @@ def countnDeleteDate(a):
         try:
                 gap = int(lists[1][3]) - int(lists[1][2])
                 key = str(lists[1][0]+','+lists[1][4])
-                value = [lists[1],gap]
+                value = [lists[1][1],gap]
                 return(key,value)
         except:
                 return ('',[''])
@@ -51,6 +52,8 @@ def formatTrans(a): #change the format into what we what we want
     a[1][0],a[1][1]= a[1][1],a[1][0]
     a[0],a[1]=a[1],a[0]
     id_country=a[0][0]
-    cate = a[0][1].strip('u')
+    cate = a[0][1]
     grade = a[1]
-    return (id_country,cate,grade)
+    vid = a[0][0][:-3]
+    country = a[0][0][-2:]
+    return (vid,grade,cate,country)
